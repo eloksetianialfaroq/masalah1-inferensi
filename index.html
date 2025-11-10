@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Cards - Dark Neon Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, #00ffff 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #00ffff;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .math-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+        }
+
+        .math-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .math-card:hover::before {
+            left: 100%;
+        }
+
+        .math-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #00ffff;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .math-card:nth-child(2n) {
+            border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        .math-card:nth-child(2n):hover {
+            border-color: #ff00ff;
+            box-shadow: 0 20px 60px rgba(255, 0, 255, 0.3);
+        }
+
+        .math-card:nth-child(3n) {
+            border-color: rgba(255, 255, 0, 0.3);
+        }
+
+        .math-card:nth-child(3n):hover {
+            border-color: #ffff00;
+            box-shadow: 0 20px 60px rgba(255, 255, 0, 0.3);
+        }
+
+        .math-symbol {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px currentColor);
+            transition: all 0.3s ease;
+        }
+
+        .math-card:hover .math-symbol {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        .math-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        .math-card:hover h3 {
+            color: #000000;
+        }
+
+        .math-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .math-card:hover p {
+            color: #000000;
+        }
+
+        .math-formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            font-size: 1.2rem;
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .math-card:hover .math-formula {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            transform: scale(1.05);
+        }
+
+        /* Color variations for different cards */
+        .card-1 { color: #00ffff; }
+        .card-2 { color: #ff00ff; }
+        .card-3 { color: #ffff00; }
+        .card-4 { color: #00ff00; }
+        .card-5 { color: #ff6600; }
+        .card-6 { color: #6600ff; }
+
+        /* Glow effect */
+        .glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            border-radius: 17px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .math-card:hover .glow {
+            opacity: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .math-card {
+                padding: 20px;
+            }
+
+            .math-symbol {
+                font-size: 3rem;
+            }
+        }
+
+        /* Pulse animation for symbols */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .math-card:hover .math-symbol {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ayo Menyimpulkan</h1>
+            <p>Berikut adalah hal yang perlu kamu sebutkan dalam membuat kesimpulan</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="math-card card-1">
+                <div class="glow"></div>
+                <span class="math-symbol">1</span>
+                <h3>Pertama</h3>
+                <p>Mulailah membuat kalimat kesimpulan dengan kata </p>
+                <div class="math-formula">Jadi,.....</div>
+            </div>
+            <div class="math-card card-1">
+                <div class="glow"></div>
+                <span class="math-symbol">2</span>
+                <h3>Kedua</h3>
+                <p>Ada dua permasalahan atau pertanyaan yang telah kamu selesaikan, mulailah mem
+                    berikan jawaban atau solusi untuk permasalahan pertama
+                </p>
+                <div class="math-formula">Jadi, panjang sebuah balok kasau yang 
+                    diperlukan adalah.......
+                </div>
+            </div>
+
+            <div class="math-card card-2">
+                <div class="glow"></div>
+                <span class="math-symbol">3</span>
+                <h3>Ketiga</h3>
+                <p>Berikan jawaban atau solusi untuk permasalahan kedua</p>
+                <div class="math-formula">Jadi, panjang sebuah balok penguatnya adalah....</div>
+            </div>
+
+            <div class="math-card card-3">
+                <div class="glow"></div>
+                <span class="math-symbol">4</span>
+                <h3>Keempat</h3>
+                <p>Pastikan bahwa kamu telah menuliskan satuan dari ukuran balok tersebut</p>
+                <div class="math-formula">meter</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated particles -->
+    <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = Math.random() * 20 + 10 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 10000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+
+        // Add click animation to cards
+        document.querySelectorAll('.math-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Add mouse movement effect
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.math-card');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            cards.forEach((card, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                card.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
